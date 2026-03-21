@@ -13,15 +13,10 @@ export default function VoterModal({ voter, onClose }) {
   const waUrl = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
 
   const forceDownload = () => {
-    const img = document.querySelector(".img-display img");
-    if (img && img.naturalWidth) {
-      const canvas = document.createElement("canvas");
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0);
-      canvas.toBlob((blob) => {
-        if (!blob) return window.open(imgUrl, "_blank");
+    const proxyUrl = `/api/download?url=${encodeURIComponent(imgUrl)}`;
+    fetch(proxyUrl)
+      .then((r) => r.blob())
+      .then((blob) => {
         const u = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = u;
@@ -30,10 +25,8 @@ export default function VoterModal({ voter, onClose }) {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(u);
-      }, "image/png");
-    } else {
-      window.open(imgUrl, "_blank");
-    }
+      })
+      .catch(() => window.open(imgUrl, "_blank"));
   };
 
   const details = [
