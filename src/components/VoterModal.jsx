@@ -13,10 +13,16 @@ export default function VoterModal({ voter, onClose }) {
   const waUrl = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
 
   const forceDownload = () => {
-    fetch(imgUrl)
-      .then((r) => r.blob())
-      .then((b) => {
-        const u = URL.createObjectURL(b);
+    const img = document.querySelector(".img-display img");
+    if (img && img.naturalWidth) {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+      canvas.toBlob((blob) => {
+        if (!blob) return window.open(imgUrl, "_blank");
+        const u = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = u;
         a.download = `BCMG_Slip_${voter.sr_no}.png`;
@@ -24,8 +30,10 @@ export default function VoterModal({ voter, onClose }) {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(u);
-      })
-      .catch(() => window.open(imgUrl, "_blank"));
+      }, "image/png");
+    } else {
+      window.open(imgUrl, "_blank");
+    }
   };
 
   const details = [
@@ -61,6 +69,7 @@ export default function VoterModal({ voter, onClose }) {
           <img
             src={imgUrl}
             alt="Voting Slip"
+            crossOrigin="anonymous"
             style={{ display: "none" }}
             onLoad={(e) => {
               e.target.style.display = "block";
