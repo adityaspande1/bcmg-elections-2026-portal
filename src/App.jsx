@@ -7,7 +7,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/:ballotNo" element={<CandidatePortal />} />
-        <Route path="/" element={<Navigate to="/100" replace />} />
+        <Route path="/" element={<Navigate to="/96" replace />} />
       </Routes>
     </BrowserRouter>
   );

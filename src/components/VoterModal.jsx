@@ -7,7 +7,9 @@ export default function VoterModal({ voter, onClose }) {
   const numLabel = "Ballot No.";
   const imgUrl = `${CARD_BASE}/${voter.id}?candidate=${c.ballot_no}`;
 
-  const shareMsg = `BCMG Election 2026\n\nName: ${voter.name}\nSr. No: ${voter.sr_no}\nEnrolment: ${voter.enrollment_raw || ""}\n\nPlease vote for ${c.display_name || c.name} (${numLabel} ${c.ballot_no}) as ${c.tagline}!\n\nView your Voting Slip: ${window.location.origin}/${c.ballot_no}`;
+  const portalUrl = `${window.location.origin}/${c.ballot_no}`;
+  const candidateImgUrl = `${window.location.origin}${c.photo_url}`;
+  const shareMsg = `BCMG Election 2026\n\nName: ${voter.name}\nSr. No: ${voter.sr_no}\nEnrolment: ${voter.enrollment_raw || ""}\n\nPlease vote for ${c.display_name || c.name} (${numLabel} ${c.ballot_no}) as ${c.tagline}!\n\nView your Voting Slip:\n${portalUrl}\n\n${candidateImgUrl}`;
   const waUrl = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
 
   const forceDownload = () => {
