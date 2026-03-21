@@ -69,7 +69,7 @@ export default function VoterModal({ voter, onClose }) {
           <img
             src={imgUrl}
             alt="Voting Slip"
-            crossOrigin="anonymous"
+
             style={{ display: "none" }}
             onLoad={(e) => {
               e.target.style.display = "block";
