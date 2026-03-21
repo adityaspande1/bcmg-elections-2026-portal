@@ -8,6 +8,9 @@ export const CANDIDATE = {
   photo_url: "/candidate.jpg",
 };
 
-export const BMC_API = "/api/bmc/WebMethods.aspx/LawyerSearchAll";
+export const BMC_API =
+  import.meta.env.DEV
+    ? "/api/bmc/WebMethods.aspx/LawyerSearchAll"
+    : "/api/search";
 
 export const CARD_BASE = "https://bcmg-election-2026.vercel.app/card";
