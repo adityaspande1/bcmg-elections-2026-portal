@@ -8,9 +8,48 @@ export default function VoterModal({ voter, onClose }) {
   const imgUrl = `${CARD_BASE}/${voter.id}?candidate=${c.ballot_no}`;
 
   const portalUrl = `${window.location.origin}/${c.ballot_no}`;
-  const candidateImgUrl = `${window.location.origin}${c.photo_url}`;
-  const shareMsg = `BCMG Election 2026\n\nName: ${voter.name}\nSr. No: ${voter.sr_no}\nEnrolment: ${voter.enrollment_raw || ""}\n\nPlease vote for ${c.display_name || c.name} (${numLabel} ${c.ballot_no}) as ${c.tagline}!\n\nView your Voting Slip:\n${portalUrl}\n\n${candidateImgUrl}`;
-  const waUrl = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
+  const displayName = c.display_name || c.name;
+  const shareText = `${portalUrl}
+
+नमस्कार,
+बार कौन्सिल ऑफ महाराष्ट्र आणि गोवा 2026 निवडणूक अंतिम टप्प्यात आलेली आहे.
+मतदारांना मतदान करताना सोयीचे जावे यासाठी वोटर्स स्लिप (voters slip) साठी वरील लिंक उपलब्ध करून दिलेली आहे. या लिंक च्या साह्याने आपणांस आपला मतदार क्रमांक व बूथ क्रमांक सहज उपलब्ध होईल.
+कृपया आपण आपल्या वकील संघातील वकील मतदारांना मतदान करण्यासाठी या यंत्रणेचा लाभ उपलब्ध करून द्यावा.
+आपण केलेल्या सहकार्याबद्दल मी ऋणी आहे.
+
+BCMG Election 2026
+Please vote for ${c.name} (${numLabel} ${c.ballot_no}) as ${c.tagline}!
+
+Serial no. ${c.ballot_no} - ${displayName}
+`;
+
+  const shareViaWhatsApp = async () => {
+    try {
+      // Fetch candidate image through proxy to avoid CORS
+      const imgResponse = await fetch(
+        `/api/download?url=${encodeURIComponent(`${window.location.origin}${c.photo_url}`)}`
+      );
+      const blob = await imgResponse.blob();
+      const file = new File([blob], "BCMG_Election_2026.jpg", {
+        type: "image/jpeg",
+      });
+
+      // Use Web Share API to share image + text
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          text: shareText,
+          files: [file],
+        });
+        return;
+      }
+    } catch {
+      // Fallback silently
+    }
+
+    // Fallback: open wa.me with text only
+    const waUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+    window.open(waUrl, "_blank");
+  };
 
   const forceDownload = () => {
     const proxyUrl = `/api/download?url=${encodeURIComponent(imgUrl)}`;
@@ -39,7 +78,10 @@ export default function VoterModal({ voter, onClose }) {
   ];
 
   return (
-    <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div
+      className="modal-overlay"
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
       <div className="modal-box">
         <div className="modal-header">
           <div style={{ flex: 1 }}>
@@ -62,7 +104,6 @@ export default function VoterModal({ voter, onClose }) {
           <img
             src={imgUrl}
             alt="Voting Slip"
-
             style={{ display: "none" }}
             onLoad={(e) => {
               e.target.style.display = "block";
@@ -96,16 +137,15 @@ export default function VoterModal({ voter, onClose }) {
         </div>
 
         <div style={{ padding: "0 20px 16px" }}>
-          <button
-            className="wa-btn"
-            onClick={() => window.open(waUrl, "_blank")}
-          >
+          <button className="wa-btn" onClick={shareViaWhatsApp}>
             Share via WhatsApp
           </button>
         </div>
 
         <div className="modal-footer-appeal">
-          <strong style={{ color: "var(--navy-700)" }}>Vote {c.display_name || c.name}</strong>{" "}
+          <strong style={{ color: "var(--navy-700)" }}>
+            Vote {c.display_name || c.name}
+          </strong>{" "}
           <span style={{ color: "var(--text-light)" }}>
             — {numLabel} {c.ballot_no} — {c.tagline}
           </span>
