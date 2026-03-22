@@ -15,7 +15,7 @@ Name: ${v.name}
 Sr. No: ${v.sr_no}
 Enrolment: ${v.enrollment_raw || ""}
 
-Please vote for ${displayName} (${numLabel} ${c.ballot_no}) as ${c.tagline}!
+Please vote for *${displayName} (${numLabel} ${c.ballot_no})* as *${c.tagline}*!
 
 View your Voting Slip:
 ${portalUrl}`;
