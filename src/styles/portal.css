@@ -118,7 +118,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid rgba(201, 168, 76, 0.5);
+  border: 3px solid var(--gold);
   flex-shrink: 0;
   overflow: hidden;
 }
@@ -157,9 +157,9 @@ a {
 }
 .candidate-ballot {
   font-family: "DM Sans", sans-serif;
-  font-size: 15px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 20px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
   margin-top: 10px;
   display: flex;
   align-items: baseline;
@@ -167,7 +167,7 @@ a {
 }
 .candidate-ballot b {
   color: var(--gold);
-  font-size: 38px;
+  font-size: 42px;
   font-weight: 800;
   letter-spacing: -1px;
 }
@@ -203,6 +203,9 @@ a {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .appeal-text {
   color: rgba(255, 255, 255, 0.5);

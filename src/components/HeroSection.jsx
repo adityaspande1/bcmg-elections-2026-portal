@@ -19,9 +19,6 @@ export default function HeroSection({ candidate }) {
 
   return (
     <header className="hero">
-      <div className="hero-bg-image">
-        <img src={candidateImg} alt="" />
-      </div>
       <div className="hero-inner">
         <div className="candidate-photo">
           {!imgLoaded && <span>{getInitials(c.name)}</span>}
@@ -50,7 +47,7 @@ export default function HeroSection({ candidate }) {
       <div className="appeal">
         <div>
           <p className="appeal-heading">
-            Dear Members of the Bar Council of Maharashtra &amp; Goa,
+            <span style={{ fontSize: "30px" }}>🙏</span> Dear Members of the Bar Council of Maharashtra &amp; Goa,
           </p>
           <p
             className="appeal-text"
