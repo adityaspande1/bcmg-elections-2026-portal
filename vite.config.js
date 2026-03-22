@@ -5,11 +5,11 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api/bmc': {
-        target: 'https://103.150.187.72:88',
+      '/api/voter-lookup': {
+        target: 'https://bcmg-election-2026.vercel.app',
         changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/api\/bmc/, ''),
+        secure: true,
+        rewrite: (path) => path.replace(/^\/api\/voter-lookup/, '/api/search'),
       },
     },
   },

@@ -1,5 +1,4 @@
 import { useState, useRef, useCallback } from "react";
-import { BMC_API } from "../config";
 
 export function useSearch() {
   const [results, setResults] = useState([]);
@@ -23,26 +22,11 @@ export function useSearch() {
       setError(null);
       setSearched(true);
       try {
-        const res = await fetch(BMC_API, {
-          method: "POST",
-          headers: { "Content-Type": "application/json; charset=utf-8" },
-          body: JSON.stringify({ searchText: query.trim().toUpperCase(), page: 1 }),
-        });
-        const json = await res.json();
-        const data = json?.d?.data || [];
-        setResults(
-          data.map((item) => ({
-            id: item.FormNumber,
-            sr_no: item.SrNo,
-            name: item.Name,
-            enrollment_raw: item.EnrollmentRaw,
-            district: item.District,
-            taluka: item.Taluka,
-            bar: item.Bar,
-            booth_name: item.BoothName,
-            booth_no: item.BoothNo,
-          }))
+        const res = await fetch(
+          `/api/voter-lookup?q=${encodeURIComponent(query.trim())}`
         );
+        const data = await res.json();
+        setResults(Array.isArray(data) ? data : []);
       } catch {
         setError("Search error — please try again");
         setResults([]);

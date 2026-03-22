@@ -1,4 +1,5 @@
 import { useState } from "react";
+import candidateImg from "../assets/image.png";
 
 function getInitials(name) {
   if (!name) return "?";
@@ -18,31 +19,23 @@ export default function HeroSection({ candidate }) {
 
   return (
     <header className="hero">
-      {c.photo_url && (
-        <div className="hero-bg-image">
-          <img src={c.photo_url} alt="" />
-        </div>
-      )}
+      <div className="hero-bg-image">
+        <img src={candidateImg} alt="" />
+      </div>
       <div className="hero-inner">
         <div className="candidate-photo">
-          {c.photo_url && !imgLoaded && (
-            <span>{getInitials(c.name)}</span>
-          )}
-          {c.photo_url ? (
-            <img
-              src={c.photo_url}
-              alt={displayName}
-              onLoad={() => setImgLoaded(true)}
-              style={{
-                display: imgLoaded ? "block" : "none",
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-              }}
-            />
-          ) : (
-            <span>{getInitials(c.name)}</span>
-          )}
+          {!imgLoaded && <span>{getInitials(c.name)}</span>}
+          <img
+            src={candidateImg}
+            alt={displayName}
+            onLoad={() => setImgLoaded(true)}
+            style={{
+              display: imgLoaded ? "block" : "none",
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
         </div>
         <div className="candidate-info">
           <h1 className="candidate-name">{displayName}</h1>

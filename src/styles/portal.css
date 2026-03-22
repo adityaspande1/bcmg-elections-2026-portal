@@ -200,13 +200,13 @@ a {
 }
 .appeal-heading {
   color: rgba(255, 255, 255, 0.7);
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 600;
   margin-bottom: 10px;
 }
 .appeal-text {
   color: rgba(255, 255, 255, 0.5);
-  font-size: 14px;
+  font-size: 17px;
   line-height: 1.75;
 }
 
@@ -680,10 +680,10 @@ a {
     margin-top: 24px;
   }
   .appeal-heading {
-    font-size: 14px;
+    font-size: 16px;
   }
   .appeal-text {
-    font-size: 13px;
+    font-size: 15px;
   }
   .gold-strip {
     flex-direction: column;

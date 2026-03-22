@@ -5,10 +5,11 @@ export default function VoterModal({ voter, onClose }) {
 
   const c = CANDIDATE;
   const numLabel = "Ballot No.";
-  const imgUrl = `${CARD_BASE}/${voter.id}?candidate=${c.ballot_no}`;
+  const slipUrl = `${CARD_BASE}/${voter.id}?candidate=${c.ballot_no}`;
 
   const portalUrl = `${window.location.origin}/${c.ballot_no}`;
   const displayName = c.display_name || c.name;
+
   const getShareText = (v) => `BCMG Election 2026
 
 Name: ${v.name}
@@ -21,12 +22,17 @@ View your Voting Slip:
 ${portalUrl}`;
 
   const shareViaWhatsApp = () => {
-    const waUrl = `https://wa.me/?text=${encodeURIComponent(getShareText(voter))}`;
+    const waUrl = `https://wa.me/?text=${encodeURIComponent(
+      getShareText(voter)
+    )}`;
     window.open(waUrl, "_blank");
   };
 
   const forceDownload = () => {
-    const proxyUrl = `/api/download?url=${encodeURIComponent(imgUrl)}`;
+    if (!slipUrl) return;
+
+    const proxyUrl = `/api/download?url=${encodeURIComponent(slipUrl)}`;
+
     fetch(proxyUrl)
       .then((r) => r.blob())
       .then((blob) => {
@@ -39,7 +45,7 @@ ${portalUrl}`;
         document.body.removeChild(a);
         URL.revokeObjectURL(u);
       })
-      .catch(() => window.open(imgUrl, "_blank"));
+      .catch(() => window.open(slipUrl, "_blank"));
   };
 
   const details = [
@@ -69,14 +75,23 @@ ${portalUrl}`;
         </div>
 
         <div className="img-display">
-          <div id="slipLoading" style={{ textAlign: "center", padding: 24 }}>
-            <div className="spinner" style={{ margin: "0 auto 12px" }} />
-            <div style={{ fontSize: 14, color: "#888", fontWeight: 600 }}>
+          <div
+            id="slipLoading"
+            style={{ textAlign: "center", padding: 24 }}
+          >
+            <div
+              className="spinner"
+              style={{ margin: "0 auto 12px" }}
+            />
+            <div
+              style={{ fontSize: 14, color: "#888", fontWeight: 600 }}
+            >
               Voting Slip Loading...
             </div>
           </div>
+
           <img
-            src={imgUrl}
+            src={slipUrl}
             alt="Voting Slip"
             style={{ display: "none" }}
             onLoad={(e) => {
@@ -86,9 +101,10 @@ ${portalUrl}`;
             }}
             onError={(e) => {
               const loader = e.target.previousSibling;
-              if (loader)
+              if (loader) {
                 loader.innerHTML =
                   '<div style="font-size:14px;color:#888;font-weight:600">Slip being generated... please refresh</div>';
+              }
             }}
           />
         </div>
@@ -118,7 +134,7 @@ ${portalUrl}`;
 
         <div className="modal-footer-appeal">
           <strong style={{ color: "var(--navy-700)" }}>
-            Vote {c.display_name || c.name}
+            Vote {displayName}
           </strong>{" "}
           <span style={{ color: "var(--text-light)" }}>
             — {numLabel} {c.ballot_no} — {c.tagline}
