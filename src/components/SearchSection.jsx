@@ -88,9 +88,9 @@ export default function SearchSection({
           )}
         </div>
         <div className="search-hints">
-          <span className="search-hint">Full Name</span>
-          <span className="search-hint">Enrolment No.</span>
-          <span className="search-hint">Sr. No.</span>
+          <span className="search-hint">👤 Full Name</span>
+          <span className="search-hint">📋 Enrolment No.</span>
+          <span className="search-hint">🔢 Sr. No.</span>
         </div>
       </div>
 

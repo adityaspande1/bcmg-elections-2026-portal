@@ -14,8 +14,9 @@ export default function CandidatePortal() {
   return (
     <>
       <TopBar />
-      <HeroSection candidate={CANDIDATE} />
-      <GoldStrip candidate={CANDIDATE} />
+      <HeroSection candidate={CANDIDATE}>
+        <GoldStrip candidate={CANDIDATE} />
+      </HeroSection>
       <SearchSection
         results={results}
         loading={loading}

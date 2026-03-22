@@ -9,7 +9,7 @@ function getInitials(name) {
     : parts[0].substring(0, 2).toUpperCase();
 }
 
-export default function HeroSection({ candidate }) {
+export default function HeroSection({ candidate, children }) {
   const [imgLoaded, setImgLoaded] = useState(false);
   const c = candidate;
   const displayName = c.display_name || c.name;
@@ -35,7 +35,7 @@ export default function HeroSection({ candidate }) {
           />
         </div>
         <div className="candidate-info">
-          <h1 className="candidate-name">{displayName}</h1>
+          <h1 className="candidate-name">{displayName.toUpperCase()}</h1>
           <p className="candidate-title">{c.title}</p>
           <p className="candidate-ballot">
             {numLabel} <b>{c.ballot_no}</b>
@@ -55,6 +55,7 @@ export default function HeroSection({ candidate }) {
           />
         </div>
       </div>
+      {children}
     </header>
   );
 }
