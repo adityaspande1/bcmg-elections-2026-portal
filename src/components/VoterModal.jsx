@@ -20,30 +20,7 @@ Please vote for ${displayName} (${numLabel} ${c.ballot_no}) as ${c.tagline}!
 View your Voting Slip:
 ${portalUrl}`;
 
-  const shareViaWhatsApp = async () => {
-    try {
-      // Fetch candidate image through proxy to avoid CORS
-      const imgResponse = await fetch(
-        `/api/download?url=${encodeURIComponent(`${window.location.origin}${c.photo_url}`)}`
-      );
-      const blob = await imgResponse.blob();
-      const file = new File([blob], "BCMG_Election_2026.jpg", {
-        type: "image/jpeg",
-      });
-
-      // Use Web Share API to share image + text
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({
-          text: getShareText(voter),
-          files: [file],
-        });
-        return;
-      }
-    } catch {
-      // Fallback silently
-    }
-
-    // Fallback: open wa.me with text only
+  const shareViaWhatsApp = () => {
     const waUrl = `https://wa.me/?text=${encodeURIComponent(getShareText(voter))}`;
     window.open(waUrl, "_blank");
   };
