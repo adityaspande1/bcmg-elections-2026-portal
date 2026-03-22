@@ -13,7 +13,7 @@ export default function HeroSection({ candidate, children }) {
   const [imgLoaded, setImgLoaded] = useState(false);
   const c = candidate;
   const displayName = c.display_name || c.name;
-  const numLabel = "Ballot No.";
+  const numLabel = "Serial No.";
 
   const defaultAppeal = `I humbly seek your valuable support in the upcoming BCMG Election 2026. With a deep commitment to upholding the interests of our legal fraternity, I request you to kindly cast your vote for <strong style="color:#e8dcc0">${displayName}</strong> as your <strong style="color:var(--gold)">${c.tagline}</strong>.`;
 

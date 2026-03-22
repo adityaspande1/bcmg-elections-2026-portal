@@ -28,7 +28,7 @@ export default function CandidatePortal() {
       />
       <footer className="footer">
         <div className="footer-cta">
-          Vote <strong>{CANDIDATE.display_name || CANDIDATE.name}</strong> — Ballot No.{" "}
+          Vote <strong>{CANDIDATE.display_name || CANDIDATE.name}</strong> — Serial No.{" "}
           {CANDIDATE.ballot_no} — {CANDIDATE.tagline} — 24 March 2026
         </div>
         <p style={{ fontSize: 11, color: "#a09880", marginTop: 14 }}>

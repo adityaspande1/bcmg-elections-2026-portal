@@ -4,7 +4,7 @@ export default function VoterModal({ voter, onClose }) {
   if (!voter) return null;
 
   const c = CANDIDATE;
-  const numLabel = "Ballot No.";
+  const numLabel = "Serial No.";
   const slipUrl = `${CARD_BASE}/${voter.id}?candidate=${c.ballot_no}`;
 
   const portalUrl = `${window.location.origin}/${c.ballot_no}`;

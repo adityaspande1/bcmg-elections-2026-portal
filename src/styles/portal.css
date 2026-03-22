@@ -157,8 +157,8 @@ a {
 }
 .candidate-ballot {
   font-family: "DM Sans", sans-serif;
-  font-size: 30px;
-  font-weight: 600;
+  font-size: 36px;
+  font-weight: 700;
   color: rgba(255, 255, 255, 0.7);
   margin-top: 10px;
   display: flex;
@@ -167,7 +167,7 @@ a {
 }
 .candidate-ballot b {
   color: var(--gold);
-  font-size: 42px;
+  font-size: 36px;
   font-weight: 800;
   letter-spacing: -1px;
 }
@@ -670,10 +670,10 @@ a {
     font-size: 20px;
   }
   .candidate-ballot {
-    font-size: 22px !important;
+    font-size: 26px !important;
   }
   .candidate-ballot b {
-    font-size: 38px !important;
+    font-size: 26px !important;
   }
   .candidate-tagline-badge {
     font-size: 10px;
