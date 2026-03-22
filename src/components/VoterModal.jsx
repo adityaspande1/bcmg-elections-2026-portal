@@ -9,19 +9,16 @@ export default function VoterModal({ voter, onClose }) {
 
   const portalUrl = `${window.location.origin}/${c.ballot_no}`;
   const displayName = c.display_name || c.name;
-  const shareText = `${portalUrl}
+  const getShareText = (v) => `BCMG Election 2026
 
-नमस्कार,
-बार कौन्सिल ऑफ महाराष्ट्र आणि गोवा 2026 निवडणूक अंतिम टप्प्यात आलेली आहे.
-मतदारांना मतदान करताना सोयीचे जावे यासाठी वोटर्स स्लिप (voters slip) साठी वरील लिंक उपलब्ध करून दिलेली आहे. या लिंक च्या साह्याने आपणांस आपला मतदार क्रमांक व बूथ क्रमांक सहज उपलब्ध होईल.
-कृपया आपण आपल्या वकील संघातील वकील मतदारांना मतदान करण्यासाठी या यंत्रणेचा लाभ उपलब्ध करून द्यावा.
-आपण केलेल्या सहकार्याबद्दल मी ऋणी आहे.
+Name: ${v.name}
+Sr. No: ${v.sr_no}
+Enrolment: ${v.enrollment_raw || ""}
 
-BCMG Election 2026
-Please vote for ${c.name} (${numLabel} ${c.ballot_no}) as ${c.tagline}!
+Please vote for ${displayName} (${numLabel} ${c.ballot_no}) as ${c.tagline}!
 
-Serial no. ${c.ballot_no} - ${displayName}
-`;
+View your Voting Slip:
+${portalUrl}`;
 
   const shareViaWhatsApp = async () => {
     try {
@@ -37,7 +34,7 @@ Serial no. ${c.ballot_no} - ${displayName}
       // Use Web Share API to share image + text
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({
-          text: shareText,
+          text: getShareText(voter),
           files: [file],
         });
         return;
@@ -47,7 +44,7 @@ Serial no. ${c.ballot_no} - ${displayName}
     }
 
     // Fallback: open wa.me with text only
-    const waUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+    const waUrl = `https://wa.me/?text=${encodeURIComponent(getShareText(voter))}`;
     window.open(waUrl, "_blank");
   };
 
